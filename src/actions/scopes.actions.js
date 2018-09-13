@@ -10,10 +10,11 @@ export const getScopesSuccess = (scopes) => ({
 });
 
 export const createScope = (scopeName) => ({
-  type: CREATE_SCOPE
+  type: CREATE_SCOPE,
+  payload: scopeName
 });
 
-export const createScopeSuccess = (scopeName) => ({
+export const createScopeSuccess = () => ({
   type: CREATE_SCOPE_SUCCESS
 });
 
