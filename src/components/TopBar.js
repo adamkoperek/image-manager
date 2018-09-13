@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import LoginDialog from './dialogs/LoginDialog'
-import CurrentUserMenu from './CurrentUserMenu'
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
+import LoginDialog from './dialogs/LoginDialog'
+import CurrentUserMenu from './CurrentUserMenu'
+import CurrentScopeMenu from "./CurrentScopeMenu";
 
 class TopBar extends Component {
 
@@ -14,10 +15,11 @@ class TopBar extends Component {
 
       <AppBar position="static" color="default">
         <Toolbar>
-          <Typography variant="title" color="inherit" style={{flex: 1 }}>
+          <Typography variant="title" color="inherit" align="left" style={{flex: 1 }}>
             IMAGE EXPLORER
           </Typography>
 
+          <CurrentScopeMenu/>
           <CurrentUserMenu/>
           <LoginDialog/>
 

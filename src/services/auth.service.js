@@ -1,6 +1,6 @@
 import {post} from './index'
 
-export const login = (email, password) => post(
+export const login = (username, password) => post(
   'login',
-  JSON.stringify({auth: {email, password}})
+  JSON.stringify({auth: {username, password}})
 );

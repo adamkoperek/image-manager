@@ -1,9 +1,9 @@
 import {LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOGIN_CANCEL} from "./types";
 
-export const login = (email, password) => ({
+export const login = (username, password) => ({
   type: LOGIN,
   payload: {
-    email,
+    username,
     password
   }
 });
