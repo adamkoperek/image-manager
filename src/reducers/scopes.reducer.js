@@ -1,4 +1,4 @@
-import {GET_SCOPES_SUCCESS} from "../actions/types";
+import {GET_SCOPES_SUCCESS, SET_CURRENT_SCOPE} from "../actions/types";
 
 const initialState = {
   scopes: [],
@@ -13,6 +13,12 @@ export default function (state = initialState, action) {
         ...state,
         scopes: action.payload
       };
+
+    case SET_CURRENT_SCOPE:
+      return {
+        ...state,
+        currentScope: action.payload
+      }
 
     default:
       return state;

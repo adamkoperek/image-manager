@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { IconButton, Menu, MenuItem } from '@material-ui/core'
+import { IconButton, Menu, MenuItem, Divider } from '@material-ui/core'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 import { logout } from '../actions/auth.actions'
@@ -34,7 +34,6 @@ class CurrentUserMenu extends Component {
     return (this.props.username && (
 
       <div>
-        <span>{this.props.username}</span>
 
         <IconButton
           aria-owns={anchorEl ? 'simple-menu' : null}
@@ -48,7 +47,8 @@ class CurrentUserMenu extends Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}>
-          <MenuItem onClick={this.handleClose}>Profil</MenuItem>
+          <MenuItem onClick={this.handleClose}>{this.props.username}</MenuItem>
+          <Divider light/>
           <MenuItem onClick={this.handleLogout}>Wyloguj</MenuItem>
         </Menu>
 

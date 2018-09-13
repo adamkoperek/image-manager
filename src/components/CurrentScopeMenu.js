@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getScopes, createScope} from '../actions/scopes.actions'
+import {getScopes, createScope, setCurrentScope} from '../actions/scopes.actions'
 import {
   Button,
   Dialog,
@@ -10,7 +10,8 @@ import {
   Menu,
   MenuItem,
   TextField,
-  Typography
+  Typography,
+  Divider
 } from "@material-ui/core";
 
 class CurrentScopeMenu extends Component {
@@ -40,7 +41,7 @@ class CurrentScopeMenu extends Component {
   };
 
   handleOpenDialog = () => {
-    this.setState({dialogIsOpen: true});
+    this.setState({anchorEl: null, dialogIsOpen: true});
   };
 
   handleCloseDialog = () => {
@@ -56,6 +57,10 @@ class CurrentScopeMenu extends Component {
     this.props.createScope(this.state.newScopeName);
   };
 
+  handleSelectScope = (scope) => {
+    this.props.setCurrentScope(scope);
+  };
+
 
   render() {
 
@@ -66,7 +71,7 @@ class CurrentScopeMenu extends Component {
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={this.handleOpenMenu}>
-          {this.props.currentScope ? this.props.currentScope : 'Wybierz przestrzeń'}
+          {this.props.currentScope ? this.props.currentScope.name : 'Wybierz przestrzeń'}
         </Button>
 
         <Menu
@@ -75,6 +80,8 @@ class CurrentScopeMenu extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleCloseMenu}>
 
+          {this.props.scopes ? this.props.scopes.map((scope, i) => (<MenuItem key={i}onClick={this.handleSelectScope(scope)}>{scope.name}</MenuItem>)) : (<div></div>)}
+          <Divider light />
           <MenuItem onClick={this.handleOpenDialog}>Utwórz przestrzeń</MenuItem>
         </Menu>
 
@@ -117,4 +124,4 @@ const mapStateToProps = ({auth, scopes}) => ({
   newScopeError: null
 });
 
-export default connect(mapStateToProps, {getScopes, createScope})(CurrentScopeMenu);
+export default connect(mapStateToProps, {getScopes, createScope, setCurrentScope})(CurrentScopeMenu);

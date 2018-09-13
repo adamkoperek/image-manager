@@ -5,5 +5,5 @@ export const getScopes = (jwt) => get(
 );
 
 export const createScope = (scopeName, jwt) => post(
-  'ajax/scopes', {scope_name: scopeName}, jwt
+  'ajax/scopes', JSON.stringify({scope_name: scopeName}), jwt
 );
