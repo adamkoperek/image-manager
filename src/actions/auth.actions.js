@@ -1,34 +1,4 @@
-import {LOGIN, LOGOUT} from "./types";
-
-// export const login = (email, password) => dispatch => {
-//
-//   console.log('login start:', email, password);
-//
-//   fetch('http://localhost:3000/login', {
-//     method: 'POST',
-//     headers: {
-//       'Content-type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       auth: {
-//         email,
-//         password
-//       }
-//     })
-//   }).then(response => response.json())
-//     .then(response => {
-//       const {jwt} = response;
-//
-//       dispatch({
-//         type: LOGIN,
-//         payload: {
-//           email,
-//           jwt
-//         }
-//       })
-//
-//     });
-// };
+import {LOGIN, LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT, LOGIN_CANCEL} from "./types";
 
 export const login = (email, password) => ({
   type: LOGIN,
@@ -36,6 +6,24 @@ export const login = (email, password) => ({
     email,
     password
   }
+});
+
+export const loginSuccess = (username, jwt) => ({
+  type: LOGIN_SUCCESS,
+  payload: {
+    username,
+    jwt
+  }
+});
+
+export const loginError = (error) => ({
+  type: LOGIN_ERROR,
+  payload: error
+});
+
+export const loginCancel = () => ({
+  type: LOGIN_CANCEL,
+  payload: {}
 });
 
 export const logout = () => ({

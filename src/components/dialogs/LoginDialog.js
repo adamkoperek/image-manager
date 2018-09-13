@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions} from '@material-ui/core'
+import {Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Typography} from '@material-ui/core'
 
 
-import {login} from '../../actions/auth.actions'
+import {login, loginCancel} from '../../actions/auth.actions'
 
 
 class LoginDialog extends Component {
@@ -21,12 +21,19 @@ class LoginDialog extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps, nextState) {
+    if (nextProps.userLoggedIn) {
+      this.setState({dialogIsOpen: false, credentials: {username: '', password: ''}});
+    }
+  }
+
   handleClickOpen = () => {
     this.setState({dialogIsOpen: true});
   };
 
   handleClose = () => {
     this.setState({dialogIsOpen: false, credentials: {username: '', password: ''}});
+    this.props.loginCancel();
   };
 
   handleChange = name => ({target: {value}}) => {
@@ -39,16 +46,12 @@ class LoginDialog extends Component {
     const {username, password} = this.state.credentials;
     this.props.login(username, password);
 
-    this.setState({dialogIsOpen: false, credentials: {username: '', password: ''}});
+    // this.setState({dialogIsOpen: false, credentials: {username: '', password: ''}});
   };
 
   render() {
 
-    if (this.props.userLoggedIn) {
-      return (<div></div>);
-    }
-
-    return (
+    return (!this.props.userLoggedIn && (
 
       <div>
 
@@ -57,6 +60,7 @@ class LoginDialog extends Component {
         <Dialog open={this.state.dialogIsOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Zaloguj się</DialogTitle>
           <DialogContent>
+            {this.props.loginError && (<Typography variant="body2" color='error'>{this.props.loginError}</Typography>)}
             <TextField
               autoFocus
               margin="dense"
@@ -88,7 +92,7 @@ class LoginDialog extends Component {
         </Dialog>
       </div>
 
-    );
+    ));
   }
 }
 
@@ -96,9 +100,10 @@ LoginDialog.propTypes = {
   login: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  userLoggedIn: state.auth.user
+const mapStateToProps = ({auth}) => ({
+  userLoggedIn: auth.user,
+  loginError: auth.loginError
 });
 
 
-export default connect(mapStateToProps, {login})(LoginDialog);
+export default connect(mapStateToProps, {login, loginCancel})(LoginDialog);

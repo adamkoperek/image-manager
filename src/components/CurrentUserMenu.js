@@ -30,12 +30,8 @@ class CurrentUserMenu extends Component {
 
   render = () => {
 
-    if (!this.props.username) {
-      return (<div></div>);
-    }
-
     const { anchorEl } = this.state;
-    return (
+    return (this.props.username && (
 
       <div>
         <span>{this.props.username}</span>
@@ -57,7 +53,7 @@ class CurrentUserMenu extends Component {
         </Menu>
 
       </div>
-    );
+    ));
   }
 }
 
